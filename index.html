@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Course Guide</title>
+    <link href="./stylesheet.css" rel="stylesheet"></link>
+    <link href="./homestyle.css" rel="stylesheet"></link>
+    <link href="./transition.css" rel="stylesheet"></link>
+  </head>
+  <body style="overflow: hidden; margin: 0; padding: 0; font-family:sans-serif; background-color: #d0d0d0">
+
+
+    <div id="whiteTrans" class="transition"></div>
+
+    <div style="position: absolute; width: 100%; height: 40px;background-color: rgba(255, 255, 255, 0.557); padding: 20px; backdrop-filter: blur(10px);">
+      <img src="bjavann-logo.png" style="position: absolute; margin-left: 10px; height: 40px;">
+      <h1 style="color: #075407; position: absolute; left: 90px; top: 0px;">Bjaavann Golfklubb</h1>
+      <h2 style="color: #075407; position: absolute; right: 70px; top: 0px; width: max-content; font-size: 30px;">Banekart</h2>
+    </div>
+
+    <div class="mapInfo fadeIn">
+      <h3 class="mapHeader">Klikk for å velge hull</h3>
+      <h3 class="mapHeaderEn">Click to choose hole</h3>
+    </div>
+    <div class="mapHole fadeIn">
+      <h4 id="hoverHole">Hull 1</h4>
+    </div>
+
+    <div class="holeMenu">
+    </div>
+
+    <canvas id="cvs" style="display: block; width: 100%; height: 100%; background-color: rgb(222, 222, 222);"></canvas>
+    
+    <script type="module">
+
+      import * as THREE from "./three_js/three.module.js";
+      import { OrbitControls } from "./three_js/OrbitControls.js";
+      import * as dat from "./three_js/dat.gui.module.js";
+      import { GLTFLoader } from "./three_js/GLTFLoader.js";
+
+
+
+      if(localStorage.getItem("firstVisit") === null){
+        alert("Welcome to this DEMO! I have only created the first hole (1). But all the functionality is working. Use the arrows to control the golf cart");
+        localStorage.setItem("firstVisit", true);
+      }
+
+      
+
+      let holes = [0];
+
+      const whiteTrans = document.getElementById("whiteTrans");
+      function startTrans(){
+        whiteTrans.style.display = "block";
+        whiteTrans.style.animationName = "transition";
+            
+        setTimeout(function(){
+          whiteTrans.style.display = "none";
+          whiteTrans.style.animationName = "none";
+        }, 450);
+      }
+      
+
+      const holeMenu = document.querySelector(".holeMenu");
+      holeMenu.style.scale = "0.75";
+      holeMenu.style.top = "0px";
+      
+
+      for(let i = 1; i <= 18; i++){
+        const holeBtn = document.createElement("div");
+        holeBtn.classList.add("holeBtn");
+
+        holeBtn.style.height = "auto";
+        holeBtn.style.paddingTop = "6px";
+        holeBtn.style.paddingBottom = "6px";
+        holeMenu.appendChild(holeBtn);
+        holeBtn.innerText = i.toString();
+        holeBtn.addEventListener("mousedown", function(){
+          
+          startTrans();
+              setTimeout(function(){
+                console.log(i)
+                sessionStorage.setItem("hole", `${i}`);
+                console.log(sessionStorage);
+                window.location.href = "./courseguide.html"; 
+              }, 200);
+        })
+      }
+
+      const hoverHole = document.getElementById("hoverHole");
+
+      //THREE
+
+      const cvs = document.getElementById("cvs");
+
+      let scene = null,
+        renderer = null,
+        camera = null;
+      let aspectRatio = window.innerWidth / window.innerHeight;
+
+      function Init3DWorld() {
+        // Set up your world scene
+        scene = new THREE.Scene();
+        scene.background = null;
+        //scene.fog = new THREE.Fog(0xa0a0a0, 10, 1400);
+
+        // Set up your scene light
+        AddLights();
+        addPlane();
+
+        // Setup Your scene camera
+        camera = new THREE.PerspectiveCamera(48, aspectRatio, 1, 2000);
+        //camera = new THREE.OrthographicCamera( 100 / - 2, 100 / 2, 100 / 2, 100 / - 2, 0, 200 );
+        camera.position.set(0, 20, 10);
+        camera.lookAt(0, 0, 0);
+
+
+        // Setup your scene models
+        LoadModels(scene);
+
+        // Set up your world renderer
+        const world = {
+          canvas: cvs,
+          antialias: true,
+        };
+        renderer = new THREE.WebGLRenderer(world, {alpha: true});
+        renderer.setClearColor( 0x000000, 0 );
+        renderer.setPixelRatio(aspectRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+
+        //CONTROLS
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.minPolarAngle = 0;
+        controls.target.set(0, 0, 0);
+        controls.enableRotate = false;
+        controls.maxDistance = 20;
+        controls.minDistance = 5;
+        controls.enablePan = false;
+        controls.enableZoom = false;
+        controls.update();
+
+        requestAnimationFrame(UpdateFrame);
+      }
+
+
+      function Resize(aWindow) {
+        aspectRatio = window.innerWidth / window.innerHeight;
+        camera.aspect = aspectRatio;
+        camera.updateProjectionMatrix();
+        renderer.setSize(aWindow.innerWidth, aWindow.innerHeight);
+      }
+
+      function UpdateFrame() {
+        renderer.render(scene, camera);
+        requestAnimationFrame(UpdateFrame);
+      }
+
+      function AddLights() {
+        const illumination = 1;
+        let light; 
+            
+        light = new THREE.PointLight("#ffffff");
+            
+        light.position.set(-40, 150, 100);
+        light.intensity = 1;
+            
+  
+        scene.add(light);
+
+        const sphereSize = 10;
+
+        let pointLightHelper = new THREE.PointLightHelper( light, sphereSize );
+        //scene.add( pointLightHelper );
+
+        light = new THREE.AmbientLight( 0x404040, 2 ); // soft white light
+        scene.add( light );
+      }
+
+      function addPlane(){
+        const geometry = new THREE.PlaneGeometry( 12, 17 );
+        const material = new THREE.MeshBasicMaterial( {color: "rgb(222, 222, 222)", side: THREE.DoubleSide} );
+        const plane = new THREE.Mesh( geometry, material );
+        plane.rotation.x = Math.PI / 2;;
+        plane.translateZ(+2);
+        plane.name = "plane";
+        scene.add( plane );
+      }
+
+      const raycaster = new THREE.Raycaster();
+      const pointer = new THREE.Vector2();
+      
+
+      function onMouseClick( event ) {
+
+        if(event.button == 0){
+
+          raycaster.setFromCamera( pointer, camera );
+          const intersects = raycaster.intersectObjects( scene.children );
+
+          for ( let i = 0; i < intersects.length; i ++ ) {
+            
+            for(let j = 0; j < holes.length; j++){
+            
+              if(intersects[i].object.name == `hole${j+1}` ){
+                startTrans();
+                setTimeout(function(){
+                  console.log(intersects[i].object.name)
+                  sessionStorage.setItem("hole", `${intersects[i].object.name.replace("hole","")}`);
+                  console.log(sessionStorage);
+                  window.location.href = "./courseguide.html"; 
+                }, 200);
+
+              }
+            }
+          }
+        }
+      }
+      
+      window.addEventListener( 'mousedown', onMouseClick );
+      window.addEventListener("touchstart", onMouseClick );
+
+      function onMouseOver( event ){ 
+
+        pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+      	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+        //camera.position.x += pointer.x/100;
+        //camera.position.y += pointer.y/100;
+
+        raycaster.setFromCamera( pointer, camera );
+        const intersects = raycaster.intersectObjects(scene.children);
+
+        for ( let i = 0; i < intersects.length; i ++ ) {
+
+          for(let j = 0; j < holes.length; j++){
+
+            if(intersects[i].object.name == `hole${j+1}`){
+              
+                holes[j].material.color.set(`rgb(155, 250, 155)`); 
+                document.body.style.cursor = "pointer";
+                hoverHole.innerText = `Hull ${j+1}`;
+
+            }else if(intersects.length < 3){
+
+              holes[j].material.color.set("rgb(112, 224, 112)");
+              document.body.style.cursor = "auto";
+
+            }
+          }         
+        }  
+      }
+
+      window.addEventListener('mousemove', onMouseOver );
+
+     
+
+      function LoadModels() {
+        const loader = new GLTFLoader();
+        loader.load("worldMap.gltf", GLTFLoadDone);
+      }
+
+      function GLTFLoadDone(GLTFStructure) {
+        GLTFStructure.scene.traverse(GLTFEachObject);
+        scene.add(GLTFStructure.scene);
+        setInterval(AnimateObjects, 33,3);
+      }
+
+      function GLTFEachObject(aObject) {
+        console.log(aObject);
+
+        for(let i=1; i <= 18; i++){
+          if(aObject.name == `hole${i}`){
+            if(aObject.name == "hole1"){
+              const material = new THREE.MeshBasicMaterial( {color: "rgb(255, 196, 0)", side: THREE.DoubleSide} );
+              aObject.material = material;
+            }else{
+              const material = new THREE.MeshBasicMaterial( {color: "rgb(112, 224, 112)", side: THREE.DoubleSide} );
+              aObject.material = material;
+            }
+            holes.splice(i-1, i, aObject,);
+          }
+        }
+
+        if(aObject.name == "range"){
+          const material = new THREE.MeshBasicMaterial( {color: "rgb(112, 224, 112)", side: THREE.DoubleSide} );
+          aObject.material = material;
+        }
+
+        if (aObject.isMesh) {
+          aObject.castShadow = true;
+          aObject.receiveShadow = true;
+        } else if (aObject.isGroup) {
+          aObject.castShadow = true;
+        }
+      }
+
+      function AnimateObjects() {
+      }
+
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      window.addEventListener("resize", onWindowResize, false);
+
+      Init3DWorld(cvs);
+
+      
+    </script>
+
+
+  </body>
+</html>

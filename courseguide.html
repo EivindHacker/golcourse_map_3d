@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Course Guide</title>
+    <link href="./stylesheet.css" rel="stylesheet"></link>
+    <link href="./transition.css" rel="stylesheet"></link>
+  </head>
+  <body style="overflow: hidden; margin: 0; padding: 0; font-family:sans-serif;">
+
+    <div id="whiteTrans" class="transition"></div>
+
+    <div style="position: absolute; width: 100%; height: 40px;background-color: rgba(255, 255, 255, 0.557); padding: 20px; backdrop-filter: blur(10px);">
+      <img src="bjavann-logo.png" style="position: absolute; margin-left: 10px; height: 40px;">
+      <h1 style="color: #075407; position: absolute; left: 90px; top: 0px;">Bjaavann Golfklubb</h1>
+      <h2 style="color: #075407; position: absolute; right: 70px; top: 0px; width: max-content; font-size: 30px;">Hole 1</h2>
+    </div>
+
+    <div id="distCont" class="dist-cont">
+      <div id="fromTee" style="color:#6c6c6c;">From Tee:</div>
+      <div id="toPin" style="color: #6c6c6c;">To Pin:</div>
+    </div>
+
+    <h3 id="greenAlert" class="greenAlert">! IKKE KJØR PÅ GREENEN !</h3>
+
+    <div class="footerBar">
+
+    <div class="navCont">
+      <div id="prevHole" class="navBtn"><img style="height: 28px; filter: invert();" src="./icons/double-arrow.svg"></div>
+      <div id="prevPoint" class="navBtn"><img style="height: 28px; filter: invert();" src="./icons/single-arrow.svg"></div>
+        <button id="play" class="navBtn"> <img style="height:16px; margin-top: 4px;" src="./icons/play-ico.png"></button>
+        <div id="nextPoint" class="navBtn"><img style="height: 28px; filter: invert(); transform: rotate(180deg);" src="./icons/single-arrow.svg"></div>
+      <div id="nextHole" class="navBtn"><img style="height: 28px; filter: invert(); transform: rotate(180deg);" src="./icons/double-arrow.svg"></div>
+      </div>
+      
+    </div>
+
+    <div class="holeCont fadeIn">
+      <h2 style="color: white; margin-left: 20px;">Par 5 - Index 3 </h2>
+      <h3 id="holeLengthTxt" style="color: white; margin-left: 20px;">581 M</h3>
+      <div class="tee-select-cont">
+        <div> <!--SPACER--></div>
+        <div id="tee0Btn" class="tee-btn">52</div>
+        <div id="tee1Btn" class="tee-btn">56</div>
+        <div id="tee2Btn" class="tee-btn">61</div>
+        <div id="tee3Btn" class="tee-btn tee-active">64</div>
+      </div>
+    </div>
+
+    <div class="infoCont fadeIn">
+      <div class="infoTxtCont">
+      </div>
+      <div id="infoBtn" class="infoBtn">INFO
+        <div style="width: 30px; height: 2px; background-color: #e1e1e1; margin: auto; margin-top: 2px;"></div>
+        <div style="width: 15px; height: 2px; background-color: #e1e1e1; margin: auto; margin-top: 4px;"></div>
+      </div>
+      
+    </div>
+
+    <div class="menu-cont fadeIn">
+      <div class="menu-btn" id="homeBtn"><img src="./icons/home.svg" class="btn-ico"></div>
+      <div class="menu-btn"></div>
+      <div class="menu-btn"></div>
+      <div class="menu-btn"></div>
+      <div id="viewBtn" class="menu-btn"><img id="viewIco" src="./icons/3d-ico.svg" class="btn-ico"></div>
+      <div id="helpBtn" class="menu-btn"><img src="./icons/help-ico.svg" style="filter:
+        invert() brightness(0.9);"></div>
+    </div>
+
+    <div class="touchCont fadeIn">
+      <div class="touchLine">
+        <div class="touchSpacer"></div>
+        <div id="forwardArrow"><img style="transform: rotate(-90deg);" class="touchBtn" src="./icons/play-ico.png"></div>
+        <div class="touchSpacer"></div>
+      </div>
+      <div class="touchLine">
+        <div id="leftArrow"><img style="transform: rotate(180deg);" class="touchBtn" src="./icons/play-ico.png"></div>
+        <div class="touchSpacer"><img style="filter: invert()" src="./icons/cart-ico.svg"></div>
+        <div id="rightArrow"><img class="touchBtn" src="./icons/play-ico.png"></div>
+      </div>
+      <div class="touchLine"><div class="touchSpacer"></div>
+      <div id="revArrow"><img style="transform: rotate(90deg);" class="touchBtn" src="./icons/play-ico.png"></div>
+      <div class="touchSpacer"></div></div>
+      
+    </div>
+<!--
+    <div id="helpBtn" class="helpBtn"><img src="./icons/help-ico.svg" style="filter:
+    invert();"></div>
+-->
+    <div id="helpCont" class="helpCont">
+
+      <h2 id="helpTitle" style="text-align: center; color: white; font-size: 40px;">
+        Instructions
+      </h2>
+      <p></p>
+
+      <!-- exit button and language selector -->
+      <div class="exitHelpCont">
+        <div style="transform: rotate(45deg);" class="cross"></div>
+        <div style="transform: rotate(-45deg);" class="cross"></div>
+      </div>
+      <div class="flagCont">
+        <h4 class="flagTitle">Språk/Language</h4>
+          <img id="noBtn" class="flagBtn" src="./icons/norwegian-ico.jpg">
+          <img id="enBtn" class="flagActive flagBtn" src="./icons/english-ico.jpg">
+      </div>
+
+    </div>
+
+    <canvas id="cvs" style="cursor: grab; display: block; /* background-image: url(./hexagon.svg); */ background-size: 75px; background-color: #dedede;"></canvas>
+
+    <script type="module" src="./mainScript.js">
+    
+
+    </script>
+  </body>
+</html>

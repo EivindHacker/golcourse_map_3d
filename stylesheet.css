@@ -1,0 +1,392 @@
+body {
+	background-color: #dedede;
+}
+
+button {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.disable {
+	pointer-events: none;
+	opacity: 0.7;
+	filter: brightness(0.9);
+}
+
+.footerBar {
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	height: 75px;
+	background-color: #00000013;
+	backdrop-filter: blur(10px);
+}
+
+@media (max-width: 756px) {
+	.footerBar {
+		transform: scale(2.5) translateY(-30%);
+	}
+}
+
+.navCont {
+	width: max-content;
+	gap: 10px;
+	padding: 10px;
+	margin: auto;
+	margin-top: 12px;
+	display: flex;
+	justify-items: center;
+	align-items: center;
+}
+
+.navBtn {
+	width: 40px;
+	height: 30px;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 10px;
+	box-shadow: none;
+	border: none;
+	background-color: #d5d5d5f1;
+	color: white;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+
+@media (min-width: 835px) {
+	.navBtn:hover {
+		transform: scale(1.1);
+		filter: brightness(1.05);
+	}
+}
+
+.holeCont {
+	background-color: #b3b3b38c;
+	margin-top: 80px;
+	position: absolute;
+	border-radius: 0 0 35px 0;
+	backdrop-filter: blur(5px);
+}
+
+.tee-select-cont {
+	background-color: rgba(128, 128, 128, 0.504);
+	border-bottom-right-radius: 35px;
+	display: flex;
+	gap: 12px;
+	padding: 10px 20px 10px 10px;
+	width: 210px;
+}
+
+.tee-btn {
+	color: white;
+	background-color: grey;
+	padding: 5px;
+	border-radius: 25px;
+	cursor: pointer;
+}
+
+.tee-active {
+	background-color: #075407;
+}
+
+@media (min-width: 835px) {
+	.tee-btn:hover {
+		filter: brightness(1.1);
+	}
+}
+
+.infoCont {
+	position: absolute;
+	top: 236px;
+	width: 180px;
+}
+
+.infoBtn {
+	padding-top: 6px;
+	padding-bottom: 4px;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	width: 100px;
+	height: 30px;
+	background-color: #a3a3a39a;
+	margin-left: 60px;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	cursor: pointer;
+}
+
+.infoTxtCont {
+	font-weight: 400;
+	transition: all 0.5s, box-shadow 0.2s;
+	background-color: #cececed7;
+	font-size: 17px;
+	color: rgb(59, 59, 59);
+	height: 0px;
+	overflow: hidden;
+	border-bottom-right-radius: 25px;
+	border-top-right-radius: 25px;
+	width: 180px;
+	padding-left: 24px;
+	padding-right: 24px;
+}
+
+.infoActive {
+	box-shadow: inset 4px 0 12px #0000003d;
+	padding: 24px;
+	overflow-y: scroll;
+	height: 320px;
+	width: 180px;
+}
+
+.menu-cont {
+	position: fixed;
+	right: 0;
+	top: 16%;
+	background-color: #c4c4c4c7;
+	backdrop-filter: blur(5px);
+	border-radius: 25px 0 0 25px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.menu-btn {
+	background-color: #979797cc;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: all 0.3s;
+	text-align: center;
+	color: white;
+	font-size: 30px;
+}
+
+@media (max-width: 756px) {
+	.menu-btn {
+		width: 75px;
+		height: 75px;
+	}
+}
+
+@media (min-width: 835px) {
+	.menu-btn:hover {
+		background-color: #767676cc;
+		transform: scale(1.05);
+	}
+}
+
+.btn-ico {
+	transition: transform 0.3s;
+	filter: invert() brightness(0.9);
+}
+
+@media (min-width: 835px) {
+	.btn-ico:hover {
+		transform: scale(1.1);
+	}
+}
+
+.dist-cont {
+	width: 150px;
+	background-color: #80808069;
+	position: absolute;
+	border-top-right-radius: 15px;
+	padding: 7px 7px 7px 15px;
+	bottom: 75px;
+	opacity: 0;
+	/*transition: 2s;*/
+}
+
+@media (min-width: 835px) {
+	.dist-cont {
+		border-top-left-radius: 15px;
+		left: 5%;
+	}
+}
+@media (min-width: 1300px) {
+	.dist-cont {
+		font-size: larger;
+		width: 175px;
+	}
+}
+
+/*
+.helpBtn{
+    height: 75px;
+    width: 75px;
+    background: radial-gradient(#969696 55%, #6f6f6f);
+    position: absolute;
+    bottom: 120px;
+    border-radius: 50px;
+    right: 20px;
+    transition: filter 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+@media (min-width:835px) {
+    .helpBtn:hover{
+        filter: brightness(1.1);
+        transform: scale(1.05);
+    }
+}
+
+@media (max-width:835px) {
+    .helpBtn{
+        transform: scale(0.7);
+        bottom: 110px;
+        right: 10px;
+    }
+}
+
+*/
+
+.helpCont {
+	display: none;
+	width: 70%;
+	max-width: 850px;
+	height: 70%;
+	background-color: #bababa;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 50px;
+	border: 10px solid #e1e1e1;
+}
+
+.flagCont {
+	position: absolute;
+	bottom: 6px;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+.flagTitle {
+	color: #ffffff;
+	font-size: 11px;
+	line-height: 0px;
+	text-align: center;
+}
+
+.flagBtn {
+	width: 42px;
+	cursor: pointer;
+	border-radius: 5px;
+	filter: brightness(1.4) contrast(0.2) grayscale(0.6);
+}
+
+@media (min-width: 835px) {
+	.flagBtn:hover {
+		transform: scale(1.05);
+		box-shadow: #959da578 0px 4px 6px;
+	}
+}
+
+.flagActive {
+	filter: none;
+	pointer-events: none;
+}
+
+@media (min-width: 835px) {
+	.exitHelpCont:hover {
+		filter: brightness(1.2);
+		transform: scale(1.1);
+	}
+}
+
+.exitHelpCont {
+	position: absolute;
+	right: 30px;
+	top: 20px;
+	width: 26px;
+	height: 26px;
+	cursor: pointer;
+}
+
+.cross {
+	position: absolute;
+	width: 25px;
+	height: 4px;
+	margin-top: 8px;
+	background-color: #6b6b6b;
+}
+
+.greenAlert {
+	display: none;
+	font-size: 5vmin;
+	color: red;
+	width: max-content;
+	max-width: 80%;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	animation-name: alert;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes alert {
+	0% {
+		opacity: 0;
+	}
+	25% {
+		opacity: 0.8;
+	}
+	50% {
+		opacity: 1;
+	}
+	75% {
+		opacity: 0.8;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.touchCont {
+	position: absolute;
+	bottom: 130px;
+	width: 150px;
+	right: 50px;
+	padding: 4px 5px 0px 5px;
+	background-color: #dfdfdf;
+	border-radius: 150px;
+	opacity: 0.8;
+	transform: scale(1.5);
+	display: none;
+}
+
+@media (min-width: 1000px) {
+	.touchCont {
+		display: none;
+	}
+}
+
+.touchLine {
+	display: flex;
+}
+
+.touchBtn {
+	width: 50px;
+	height: 50px;
+	user-select: none;
+	-drag: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+.touchSpacer {
+	width: 50px;
+	height: 50px;
+}
